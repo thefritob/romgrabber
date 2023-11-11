@@ -1,6 +1,6 @@
 # Variables
-$URL = "https://www.example.com/files/No-Intro/Nintendo%20-%20Game%20Boy%20Advance/" # URL to fetch files from
-$keywords = @("\(us") # Keywords to match, seperated by commas in quotes
+$URL = "https://www.example.com/files/system/gba/" # URL to fetch files from
+$keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes
 $excludeWords = @("beta", "pre-release","demo","bios","proto") # Words that filenames cannot contain
 $ignoreFiles = @("ignore1.txt", "ignore2.txt") # List of filenames to ignore
 $downloadDirectory = "C:\\Downloads\\GBA\\" # Directory to download files to
