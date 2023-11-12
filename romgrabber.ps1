@@ -1,5 +1,5 @@
 # Variables
-$URL = "https://www.example.com/files/system/gg" # URL to fetch files from
+$URL = "https://WWW.example.com/files/downloads/gg" # URL to fetch files from
 $downloadDirectory = "C:\\Downloads\\GG\\" # Directory to download files to
 $keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes, remeber to use escape characters"
 $excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b") # Words that filenames cannot contain
