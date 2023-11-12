@@ -1,6 +1,6 @@
 # Variables
-$URL = "https://WWW.example.com/files/downloads/gg" # URL to fetch files from
-$downloadDirectory = "C:\\Downloads\\GG\\" # Directory to download files to
+$URL = "https://example.com/files/system/" # URL to fetch files from
+$downloadDirectory = "C:\\Downloads\\SEGA\\" # Directory to download files to
 $keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes, remeber to use escape characters"
 $excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b") # Words that filenames cannot contain
 $ignoreFiles = @("ignore1.txt", "ignore2.txt") # List of filenames to ignore
