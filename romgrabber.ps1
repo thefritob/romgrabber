@@ -76,12 +76,15 @@ do
                 $fileName = Split-Path $link.href -Leaf
                 $goodname = Split-Path $link.innerText -Leaf
                 $filePath = Join-Path -Path $downloadDirectory -ChildPath $goodname
-                if(Test-Path -Path $filePath){Write-host "File" $filepath "exists skipping"}
+                if(Test-Path -Path $filePath){Write-host "File" $filepath "exists, moving on"}
                 else {
                     # Log downloads to the screen with nicer name
                     Write-Host "Saving" $fileUrl "to" $filePath
                     $speed = Measure-Command { Invoke-WebRequest -Uri $fileUrl -OutFile $filePath -DisableKeepAlive} | Select-Object TotalMilliseconds
-                    if ($speed.TotalMilliseconds -lt $speedlimit){Start-Sleep -Milliseconds $speedlimit}
+                    if ($speed.TotalMilliseconds -lt $speedlimit){
+                        write-host "Giving that server a moment. We're going pretty fast, tiny files can do that."
+                        Start-Sleep -Milliseconds $speedlimit
+                    }
                 }
             }
         } 
