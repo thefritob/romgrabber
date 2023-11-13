@@ -1,10 +1,10 @@
 # Variables
-$URL = "https://example.com/files/system/" # URL to fetch files from
-$downloadDirectory = "C:\\Downloads\\SEGA\\" # Directory to download files to
+$URL = "https://www.example.com/files/system/gg/" # URL to fetch files from
+$downloadDirectory = "C:\\Downloads\\GG\\" # Directory to download files to
 $keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes, remeber to use escape characters"
 $excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b") # Words that filenames cannot contain
 $ignoreFiles = @("ignore1.txt", "ignore2.txt") # List of filenames to ignore
-$speedlimit = 2000 # Speed limit is the number of milliseconds a download must take or it will sleep that many before starting the next one
+$speedlimit = 2000 # Speed limit is the number of milliseconds a download must take or it will sleep that many before starting the next one (less than 1500 and a server will limit you)
 
 # Get list of available files
 $webRequest = Invoke-WebRequest -Uri $URL
@@ -33,7 +33,7 @@ if (!(Test-Path -Path $downloadDirectory)) { New-Item -ItemType Directory -Path 
 # Group matching links by base filename up to the first parenthesis, case-insensitive)
 $groupedLinks = $matchingLinks | Group-Object -Property {$_ -ireplace '\(.*', '('}
 
-# For each group, select the link with the highest rev number (case-insensitive)
+# For each group, select the link with the highest string value (case-insensitive)
 $selectedLinks = foreach ($group in $groupedLinks) {$group.Group | Sort-Object -Property {$_.innerText} | Select-Object -First 1 }
 
 # Starting the menu system
@@ -72,7 +72,7 @@ do
             Clear-Host
             foreach ($link in $selectedLinks) {
                 $fileUrl = $URL + $link.innerText
-                # Using .href didnt' work because it did not like special characters
+                # Using .href didn't work because it did not like special characters
                 $fileName = Split-Path $link.href -Leaf
                 $goodname = Split-Path $link.innerText -Leaf
                 $filePath = Join-Path -Path $downloadDirectory -ChildPath $goodname
@@ -94,7 +94,7 @@ do
             # Get all files in the directory
             $directoryFiles = Get-ChildItem -Path $downloadDirectory -File | ForEach-Object { $_.Name }
             # Make sure dir isn't empty
-            if ($directoryFiles -eq $null){
+            if ($null -eq $directoryFiles){
                 Write-Host "Download Directory Empty - skipping"
                 break  
             }
