@@ -2,7 +2,7 @@
 $URL = "https://www.example.com/files/system/gg/" # URL to fetch files from
 $downloadDirectory = "C:\\Downloads\\GG\\" # Directory to download files to
 $keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes, remeber to use escape characters"
-$excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b") # Words that filenames cannot contain
+$excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b","\(after","ket\)") # Words that filenames cannot contain
 $ignoreFiles = @("ignore1.txt", "ignore2.txt") # List of filenames to ignore
 $speedlimit = 2000 # Speed limit is the number of milliseconds a download must take or it will sleep that many before starting the next one (less than 1500 and a server will limit you)
 
@@ -102,7 +102,7 @@ do
             $otherfiles = Compare-object -ReferenceObject $selectedLinks.innerText -DifferenceObject $directoryFiles | Where-Object { $_.SideIndicator -eq "=>" } | ForEach-Object { $_.InputObject }
             # List the files to move and ask for confirm
             Write-Host "Files to move to the (other) folder:"
-            Write-Host $otherfiles
+            Write-Host $otherfiles | Format-List
             $userInput = Read-Host "Do you want to move these files? (Y/N)"
             # Start the move
             if ($userInput -eq "Y"){ 
