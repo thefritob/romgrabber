@@ -1,8 +1,14 @@
+#Must have parameters
+# URL and downloaddirectory .\romgrabber.ps1 "https://website.com/system" "C:\Myroms\supergame9000"
+param(
+[Parameter(Position=0,Mandatory=$true)]
+[string]$URL,
+[Parameter(Position=1,Mandatory=$true)]
+[string]$downloadDirectory
+)
 # Variables
-$URL = "https://www.example.com/files/system/gg/" # URL to fetch files from
-$downloadDirectory = "C:\\Downloads\\GG\\" # Directory to download files to
 $keywords = @("\(us","us\)","usa\)") # Keywords to match, seperated by commas in quotes, remeber to use escape characters"
-$excludeWords = @("\(beta", "\(pre-release","\(demo","\(bios","\(proto","\(alt","\[bios","demo ","\[b","\(after","ket\)") # Words that filenames cannot contain
+$excludeWords = @("\(beta", "\(pre-release", "\(bios", "\(proto", "\(alt", "\[bios", "\(de", "mo\)", "\[b", "\(aft", "ket\)", "unreleased", "un-released") # Words that filenames cannot contain
 $ignoreFiles = @("ignore1.txt", "ignore2.txt") # List of filenames to ignore
 $speedlimit = 2000 # Speed limit is the number of milliseconds a download must take or it will sleep that many before starting the next one (less than 1500 and a server will limit you)
 
@@ -71,11 +77,12 @@ do
         '2' {
             Clear-Host
             foreach ($link in $selectedLinks) {
-                $fileUrl = $URL + $link.innerText
-                # Using .href didn't work because it did not like special characters
+                $fileUrl = $URL + $link.href
                 $fileName = Split-Path $link.href -Leaf
                 $goodname = Split-Path $link.innerText -Leaf
-                $filePath = Join-Path -Path $downloadDirectory -ChildPath $goodname
+                # Have to remove exclamation points for the filesystem
+                $bestname = $goodname -replace "\[!\]", ""
+                $filePath = Join-Path -Path $downloadDirectory -ChildPath $bestname
                 if(Test-Path -Path $filePath){Write-host "File" $filepath "exists, moving on"}
                 else {
                     # Log downloads to the screen with nicer name
