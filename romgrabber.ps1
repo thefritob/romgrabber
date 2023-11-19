@@ -26,7 +26,7 @@ $matchingLinks = $webRequest.Links | Where-Object {
     # Check if any exclusion word matches (case-insensitive)
     $excludeMatch = $excludeWords | Where-Object { $fileName -imatch $_ }
 
-    # Check if filename is in ignore list (case-insensitive)
+    # Check if filename is in ignore list (case-insensitive)6
     $ignoreMatch = $ignoreFiles -contains $fileName
 
     # If a keyword matches, no exclusion word matches, and filename is not in ignore list, then include the link
@@ -81,7 +81,7 @@ do
                 $fileName = Split-Path $link.href -Leaf
                 $goodname = Split-Path $link.innerText -Leaf
                 # Have to remove exclamation points for the filesystem
-                $bestname = $goodname -replace "\[!\]", ""
+                $bestname = $goodname -replace '\[.*?\]', ""
                 $filePath = Join-Path -Path $downloadDirectory -ChildPath $bestname
                 if(Test-Path -Path $filePath){Write-host "File" $filepath "exists, moving on"}
                 else {
