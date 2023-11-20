@@ -105,6 +105,10 @@ do
                 Write-Host "Download Directory Empty - skipping"
                 break  
             }
+            # Clean up file names with square brackets
+            foreach ($link in $selectedLinks) {
+                $link.innerText = $link.innerText -replace '\[.*?\]', ""
+            }
             # Compare to the online list
             $otherfiles = Compare-object -ReferenceObject $selectedLinks.innerText -DifferenceObject $directoryFiles | Where-Object { $_.SideIndicator -eq "=>" } | ForEach-Object { $_.InputObject }
             # List the files to move and ask for confirm
